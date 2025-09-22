@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Provider Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      background: #f8f9fb;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: #1048A9;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      font-size: 1.3rem;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .sidebar a {
+      color: #fff;
+      text-decoration: none;
+      margin: 15px 0;
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+      color: #B7B6B6;
+    }
+
+    .sidebar a i {
+      margin-right: 10px;
+    }
+
+    /* Main content */
+    .main {
+      flex: 1;
+      padding: 20px;
+    }
+
+    /* Topbar */
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      background: #fff;
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .topbar span {
+      margin-right: 15px;
+      font-weight: bold;
+    }
+
+    .topbar a {
+      color: #1048A9;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    /* Dashboard content */
+    .dashboard {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    h3 {
+      margin-bottom: 15px;
+      color: #1048A9;
+    }
+
+    /* Search bar */
+    .search-box {
+      display: flex;
+      margin-bottom: 15px;
+    }
+
+    .search-box input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px 0 0 6px;
+      outline: none;
+    }
+
+    .search-box button {
+      background: #1048A9;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 0 6px 6px 0;
+      cursor: pointer;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 15px;
+    }
+
+    table th, table td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    table th {
+      background: #f0f0f0;
+    }
+
+    table td a {
+      color: #1048A9;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* Quick stats */
+    .stats {
+      display: grid;
+      gap: 15px;
+    }
+
+    .stat-box {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .stat-box h4 {
+      font-size: 1.5rem;
+      margin-bottom: 5px;
+      color: #1048A9;
+    }
+
+    /* Basic Info */
+    .basic-info {
+      margin-top: 20px;
+    }
+
+    .buttons {
+      margin-top: 15px;
+    }
+
+    .buttons button {
+      background: #1048A9;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      margin-right: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .buttons button:hover {
+      background: #083b7a;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Medilink</h2>
+    <a href="#">🏠 Dashboard</a>
+    <a href="#">👥 Patients</a>
+    <a href="#">📅 Appointments</a>
+    <a href="#">📊 Reports</a>
+    <a href="#">🔔 Notifications</a>
+    <a href="#">⚙️ Settings</a>
+  </div>
+
+  <!-- Main content -->
+  <div class="main">
+    <!-- Topbar -->
+    <div class="topbar">
+      <span>Dr. Smith</span>
+      <a href="index.html">Logout</a>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="dashboard">
+      <!-- Left: Patient search & table -->
+      <div class="card">
+        <h3>Patient Search & Add</h3>
+        <div class="search-box">
+          <input type="text" placeholder="Search patient by name or ID">
+          <button>Add New Patient</button>
+        </div>
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Last Visit</th>
+            <th>Condition Summary</th>
+            <th>Action</th>
+          </tr>
+          <tr>
+            <tr>
+            <td>John Doe</td>
+            <td>35</td>
+            <td>05/10/2024</td>
+            <td>Flu</td>
+            <td><a href="john-doe.html" class="btn-view">View</a></td>
+            </tr>
+
+          </tr>
+          <tr>
+            <td>Jane Smith</td>
+            <td>42</td>
+            <td>05/12/2024</td>
+            <td>Diabetes</td>
+            <td><a href="#">View</a></td>
+          </tr>
+          <tr>
+            <td>Michael Brown</td>
+            <td>28</td>
+            <td>02/20/2024</td>
+            <td>Hypertension</td>
+            <td><a href="#">View</a></td>
+          </tr>
+          <tr>
+            <td>Emily Davis</td>
+            <td>51</td>
+            <td>01/20/2024</td>
+            <td>Asthma</td>
+            <td><a href="#">View</a></td>
+          </tr>
+        </table>
+
+        <div class="basic-info">
+          <h3>Basic Info</h3>
+          <p><strong>Patient Name:</strong> John Doe</p>
+          <p><strong>Age:</strong> 35</p>
+          <p><strong>Contact:</strong> 123-456-7890</p>
+          <div class="buttons">
+            <button>Add Diagnosis</button>
+            <button>Add Prescription</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Stats -->
+      <div class="stats">
+        <div class="stat-box">
+          <h4>250</h4>
+          <p>Active Patients</p>
+        </div>
+        <div class="stat-box">
+          <h4>3</h4>
+          <p>Upcoming Appointments</p>
+        </div>
+        <div class="stat-box">
+          <p>🔔 New vaccine guideline</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

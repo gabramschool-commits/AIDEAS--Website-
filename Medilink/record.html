@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Voice Diagnosis Recorder</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(rgba(16,72,169,0.9), rgba(0,0,0,0.8));
+      color: #fff;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background: #1048A9;
+      color: #fff;
+    }
+
+    header img {
+      height: 50px;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      flex: 1;
+      text-align: center;
+    }
+
+    .back-btn {
+      background: #fff;
+      color: #1048A9;
+      padding: 8px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #e0e0e0;
+    }
+
+    .recorder-container {
+      text-align: center;
+      margin-top: 200px;
+      width: 80%;
+      max-width: 800px;
+    }
+
+    .recorder-container h2 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+
+    .mic-btn {
+      background: #fff;
+      border-radius: 50%;
+      padding: 40px;
+      cursor: pointer;
+      transition: transform 0.3s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .mic-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .mic-btn img {
+      width: 120px;
+      height: 120px;
+      display: block;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+      70% { transform: scale(1.1); box-shadow: 0 0 20px 20px rgba(255, 0, 0, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+    }
+
+    .recording {
+      animation: pulse 1s infinite;
+      border-radius: 50%;
+    }
+
+    .status {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #B7B6B6;
+    }
+
+    .diagnosis-box {
+      margin-top: 30px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      font-size: 1rem;
+      line-height: 1.5;
+      min-height: 100px;
+      text-align: left;
+      color: #fff;
+      white-space: pre-wrap;
+      overflow-y: auto;
+    }
+
+    .finished-box {
+      display: none;
+      margin-top: 20px;
+      padding: 15px 25px;
+      background: #1048A9;
+      color: #fff;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .finished-box:hover {
+      background: #0d367a;
+    }
+
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 20px;
+      background: #f2f2f2;
+      color: #555;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+    <header>
+    <a href="john-doe.html" class="back-btn">Back</a>
+    <h1>Voice Diagnosis Recorder</h1>
+    <div style="width:80px;"></div> <!-- placeholder for spacing -->
+    </header>
+  <div class="recorder-container">
+    <h2>Tap the Mic to Record Diagnosis</h2>
+    <div class="mic-btn" id="micButton">
+      <img src="mic.png" alt="Mic" id="micIcon">
+    </div>
+    <div class="status" id="statusText">Idle</div>
+
+    <div class="diagnosis-box" id="diagnosisBox"></div>
+    <div class="finished-box" id="finishedBox">Finished Recording?</div>
+  </div>
+
+  <footer>
+    &copy; 2025 Medical Access Portal. All rights reserved.
+  </footer>
+
+  <script>
+    const micButton = document.getElementById("micButton");
+    const statusText = document.getElementById("statusText");
+    const diagnosisBox = document.getElementById("diagnosisBox");
+    const finishedBox = document.getElementById("finishedBox");
+
+    const diagnosisText = `Maria Santos, a 52-year-old female, came to the clinic complaining of dizziness that started two days ago. She described the episodes as sudden and mostly occurring when she stands up, accompanied by a mild headache. She denied any chest pain, palpitations, loss of consciousness, or visual disturbances. Maria has a known history of hypertension for the past 10 years and type 2 diabetes mellitus for 5 years. She has been compliant with her medications, currently taking Metformin 500 mg twice daily and Amlodipine 10 mg once daily. She reports no known drug allergies. She does not smoke and only engages in light daily walking for exercise.`;
+
+    let recording = false;
+    let typingInterval;
+    const words = diagnosisText.split(" ");
+    let wordIndex = 0;
+
+    micButton.onclick = () => {
+      recording = !recording;
+
+      if (recording) {
+        micButton.classList.add("recording");
+        statusText.textContent = "Recording...";
+        finishedBox.style.display = "none";
+
+        typingInterval = setInterval(() => {
+          if (wordIndex < words.length) {
+            diagnosisBox.textContent += (wordIndex === 0 ? "" : " ") + words[wordIndex];
+            wordIndex++;
+          } else {
+            clearInterval(typingInterval);
+            micButton.classList.remove("recording");
+            statusText.textContent = "Idle";
+          }
+        }, 300); // 300ms per word
+      } else {
+        micButton.classList.remove("recording");
+        statusText.textContent = "Idle";
+        finishedBox.style.display = "block"; // show finished box when paused
+        clearInterval(typingInterval);
+      }
+    };
+
+    finishedBox.onclick = () => {
+  window.location.href = "standardized_records.html";
+    };
+  </script>
+</body>
+</html>

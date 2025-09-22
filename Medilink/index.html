@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Medical Access Portal</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #000000;
+    }
+
+    /* Header */
+    header img {
+      height: 50px;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background: #339fd1; /* opaque theme blue */
+      z-index: 1000;
+    }
+
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #ffffff; /* white text */
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #B7B6B6; /* soft gray on hover */
+    }
+
+    .btn-login {
+      background: #ffffff;
+      color: #1048A9;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-login:hover {
+      background: #f0f0f0;
+    }
+
+    /* Hero Section */
+    .hero {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-right: 50px;
+      padding-left: 50px;
+      padding-top: 20px;
+      position: relative;
+      background: 
+        linear-gradient(rgba(16, 72, 169, 0.85), rgba(0, 0, 0, 0.6)),
+        url("bg.jpg") no-repeat center center/cover;
+      color: #ffffff;
+      margin-top: 90px; /* push below header */
+    }
+
+    .hero-left {
+      max-width: 50%;
+      z-index: 2;
+    }
+
+    .hero-left h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .hero-left p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+    }
+
+    .hero-right img {
+      height: 90vh;
+      width: auto;
+      object-fit: contain;
+      z-index: 0;
+    }
+
+    /* Modal Popup */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0; top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      width: 320px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .modal-content h2 {
+      margin-bottom: 20px;
+      color: #1048A9;
+    }
+
+    /* Role Selection */
+    .login-option {
+      display: block;
+      background: #B7B6B6;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      color: #000000;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .login-option:hover {
+      background: #1048A9;
+      color: #ffffff;
+    }
+
+    /* Login Form */
+    .login-form {
+      display: none;
+    }
+    .login-form input {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .login-form button {
+      width: 100%;
+      padding: 12px;
+      background: #1048A9;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .login-form button:hover {
+      background: #000;
+    }
+    .login-form p {
+      margin-top: 15px;
+    }
+    .login-form a {
+      color: #1048A9;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .close-btn {
+      margin-top: 15px;
+      display: inline-block;
+      color: #1048A9;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #f2f2f2;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <img src="logo.png" alt="Medical Logo">
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Departments</a>
+      <a href="#">Contact</a>
+    </nav>
+    <a class="btn-login" id="openModal">Login</a>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-left">
+      <h1>Take Care of Your Health Now</h1>
+      <p>Access medical services, provider tools, academic resources, and government support all in one portal.</p>
+    </div>
+    <div class="hero-right">
+      <img src="doctor.png" alt="Doctor">
+    </div>
+  </section>
+
+  <!-- Modal -->
+  <div class="modal" id="loginModal">
+    <div class="modal-content">
+      <!-- Role Selection -->
+      <div id="roleSelection">
+        <h2>Login As</h2>
+        <div class="login-option" onclick="showLoginForm('Patient')">Patient</div>
+        <div class="login-option" onclick="showLoginForm('Healthcare Provider')">Healthcare Provider</div>
+        <div class="login-option" onclick="showLoginForm('Institution')">Institution</div>
+        <div class="login-option" onclick="showLoginForm('Government Agency')">Government Agency</div>
+        <span class="close-btn" id="closeModal">Close</span>
+      </div>
+
+      <!-- Login Form -->
+      <div class="login-form" id="loginForm">
+        <h2 id="roleTitle"></h2>
+        <input type="text" placeholder="Username">
+        <input type="password" placeholder="Password">
+        <button>Log In</button>
+        <p>Don’t have an account? <a href="#">Sign Up</a></p>
+        <span class="close-btn" onclick="backToRoles()">Back</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Medical Access Portal. All rights reserved.
+  </footer>
+
+  <script>
+  const modal = document.getElementById("loginModal");
+  const openModal = document.getElementById("openModal");
+  const closeModal = document.getElementById("closeModal");
+  const roleSelection = document.getElementById("roleSelection");
+  const loginForm = document.getElementById("loginForm");
+  const roleTitle = document.getElementById("roleTitle");
+
+  let selectedRole = ""; // store selected role
+
+  openModal.onclick = () => { 
+    modal.style.display = "flex"; 
+    roleSelection.style.display = "block";
+    loginForm.style.display = "none";
+  }
+
+  closeModal.onclick = () => { modal.style.display = "none"; }
+  window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; }
+
+  function showLoginForm(role) {
+    selectedRole = role;
+    roleTitle.textContent = role + " Login";
+    roleSelection.style.display = "none";
+    loginForm.style.display = "block";
+  }
+
+  function backToRoles() {
+    roleSelection.style.display = "block";
+    loginForm.style.display = "none";
+  }
+
+  // Handle login button click
+  document.querySelector(".login-form button").onclick = function () {
+    if (selectedRole === "Patient") {
+      window.location.href = "patient.html";
+    } else if (selectedRole === "Healthcare Provider") {
+      window.location.href = "provider.html";
+    } else if (selectedRole === "Institution") {
+      window.location.href = "institution.html";
+    } else if (selectedRole === "Government Agency") {
+      window.location.href = "government.html";
+    }
+  };
+</script>
+  </script>
+</body>
+</html>
