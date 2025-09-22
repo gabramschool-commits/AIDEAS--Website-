@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Institution Research Portal – Central Health DB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1b73e8;
+  --bg: #fafafa;
+  --card-bg: #fff;
+  --text: #333;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin:0;
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* Top Nav */
+.navbar {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:1rem 2rem;
+  background:var(--card-bg);
+  box-shadow:0 2px 6px rgba(0,0,0,0.05);
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+.brand { font-weight:700; font-size:1.3rem; color:var(--primary); }
+.nav-links a {
+  margin-left:1.5rem;
+  color:var(--text);
+  font-weight:500;
+  text-decoration:none;
+}
+.nav-links a:hover { color:var(--primary); }
+.logout {
+  margin-left:1.5rem;
+  background:var(--primary);
+  color:#fff;
+  padding:0.45rem 1.1rem;
+  border-radius:20px;
+  font-weight:600;
+  cursor:pointer;
+  border:none;
+  transition:background .2s;
+}
+.logout:hover { background:#1664c0; }
+
+/* Page Container */
+.container {
+  max-width:1200px;
+  margin:2rem auto;
+  padding:0 1.5rem;
+}
+
+/* Header */
+.page-title {
+  font-size:2rem;
+  font-weight:700;
+  color:var(--primary);
+  margin-bottom:0.5rem;
+}
+.subtitle {
+  color:#555;
+  margin-bottom:2rem;
+}
+
+/* Search + Filters */
+.header-actions {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:2rem;
+}
+.search-bar input {
+  width:300px;
+  padding:0.6rem 1rem;
+  border:1px solid #ddd;
+  border-radius:30px;
+  font-size:0.95rem;
+  outline:none;
+}
+.filters {
+  display:flex;
+  gap:0.6rem;
+  flex-wrap:wrap;
+}
+.filters button {
+  background:#f0f0f0;
+  border:none;
+  padding:0.4rem 0.9rem;
+  border-radius:20px;
+  font-size:0.85rem;
+  cursor:pointer;
+  transition:background 0.2s;
+}
+.filters button:hover,
+.filters .active {
+  background:var(--primary);
+  color:#fff;
+}
+
+/* Dataset Cards */
+.dataset-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+  gap:1.5rem;
+}
+.dataset-card {
+  background:var(--card-bg);
+  border-radius:12px;
+  padding:1.5rem;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+  display:flex;
+  flex-direction:column;
+  transition:transform .2s, box-shadow .2s;
+  text-decoration:none; /* for links */
+  color:inherit;
+}
+.dataset-card:hover {
+  transform:translateY(-4px);
+  box-shadow:0 6px 16px rgba(0,0,0,0.08);
+}
+.dataset-card h3 {
+  margin:0 0 0.6rem;
+  font-size:1.1rem;
+  color:var(--primary);
+}
+.dataset-card p {
+  flex-grow:1;
+  font-size:0.9rem;
+  color:#555;
+  margin-bottom:1rem;
+}
+.dataset-meta {
+  display:flex;
+  justify-content:space-between;
+  font-size:0.8rem;
+  color:#888;
+}
+
+/* Responsive tweaks */
+@media(max-width:600px){
+  .search-bar input{width:100%;}
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="brand">MediLink</div>
+  <div class="nav-links">
+    <a href="#">Datasets</a>
+    <a href="#">My Downloads</a>
+    <a href="#">Profile</a>
+    <button class="logout" onclick="logout()">Logout</button>
+  </div>
+</nav>
+
+<div class="container">
+  <h1 class="page-title">Research Datasets</h1>
+  <p class="subtitle">
+    Access anonymized medical data and automated reports for academic and institutional research.
+  </p>
+
+  <div class="header-actions">
+    <div class="search-bar">
+      <input type="text" placeholder="Search datasets…">
+    </div>
+    <div class="filters">
+      <button class="active">All</button>
+      <button>Public Health</button>
+      <button>Genomics</button>
+      <button>Diagnostics</button>
+      <button>AI Training</button>
+    </div>
+  </div>
+
+  <div class="dataset-grid">
+    <!-- Each dataset-card is now a link to another page -->
+    <a href="dataset-details.html?dataset=health-stats" class="dataset-card">
+      <h3>National Health Statistics 2015–2025</h3>
+      <p>Aggregated, de-identified patient records with regional breakdowns for trend analysis.</p>
+      <div class="dataset-meta">
+        <span>Updated Sept 2025</span>
+        <span>120k rows</span>
+      </div>
+    </a>
+
+    <a href="dataset-details.html?dataset=ai-imaging" class="dataset-card">
+      <h3>AI Diagnostic Imaging</h3>
+      <p>X-ray and CT datasets prepared for machine learning, fully anonymized.</p>
+      <div class="dataset-meta">
+        <span>Updated Aug 2025</span>
+        <span>40 GB</span>
+      </div>
+    </a>
+
+    <a href="dataset-details.html?dataset=nutrition" class="dataset-card">
+      <h3>Nutrition & Food Security</h3>
+      <p>Survey data on diet diversity and food access across multiple provinces.</p>
+      <div class="dataset-meta">
+        <span>Updated May 2025</span>
+        <span>78k rows</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+<script>
+function logout() {
+  // Redirect user back to landing page
+  window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>

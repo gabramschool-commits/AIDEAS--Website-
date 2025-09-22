@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dataset Details</title>
+
+<style>
+/* ==== Base Styles ==== */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #fafafa;
+  color: #222;
+}
+a { text-decoration: none; color: #333; }
+
+/* ==== Top Bar ==== */
+.topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  background: #fff; padding: 10px 20px; border-bottom: 1px solid #ddd;
+}
+.logo { font-weight: bold; font-size: 1.2rem; }
+.topbar nav a { margin: 0 10px; }
+.topbar .btn {
+  margin-left: 15px; padding: 6px 12px; cursor: pointer;
+  background: #1a73e8; color: #fff; border: none; border-radius: 4px;
+}
+
+/* ==== Layout ==== */
+.container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+
+/* ==== Dataset Header ==== */
+.dataset-header .author {
+  display: flex; align-items: center; gap: 10px; color: #555;
+}
+.dataset-header .author img {
+  width: 40px; height: 40px; border-radius: 50%;
+}
+.dataset-header .title { font-size: 1.8rem; margin: 10px 0; }
+.actions { margin-top: 10px; }
+.actions .btn {
+  margin-right: 10px; padding: 6px 14px;
+  border: 1px solid #ccc; background: #fff; color: #333;
+  border-radius: 4px; cursor: pointer;
+}
+.actions .btn-download { background: #1a73e8; color: #fff; border: none; }
+
+/* ==== Tabs ==== */
+.tabs ul {
+  display: flex; list-style: none; padding: 0; margin: 20px 0;
+  border-bottom: 1px solid #ddd;
+}
+.tabs li {
+  padding: 10px 20px; cursor: pointer; transition: 0.2s;
+}
+.tabs li.active {
+  border-bottom: 3px solid #1a73e8; font-weight: bold; color: #1a73e8;
+}
+
+/* ==== Tab Content ==== */
+.tab-content { margin-top: 20px; }
+.tab-content.hidden { display: none; }
+
+.preview-table {
+  width: 100%; border-collapse: collapse; margin-top: 10px;
+}
+.preview-table th, .preview-table td {
+  border: 1px solid #ddd; padding: 8px; text-align: left;
+}
+</style>
+</head>
+
+<body class="dataset-details">
+
+<!-- ===== Top Navigation ===== -->
+<header class="topbar">
+  <div class="logo">MediLink</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="datasets.html" class="active">Datasets</a>
+    <a href="dashboard.html">Dashboard</a>
+    <button class="btn logout" onclick="window.location='index.html'">Logout</button>
+  </nav>
+</header>
+
+<!-- ===== Main Content ===== -->
+<main class="container">
+  <section class="dataset-header">
+    <div class="author">
+      <span class="name">Dr. Jane Researcher</span>
+      <span class="updated">• Updated 7 hours ago</span>
+    </div>
+
+    <h1 class="title">Healthcare Dataset</h1>
+    <p class="subtitle">Anonymized healthcare dataset for predictive modeling</p>
+
+    <div class="actions">
+      <button class="btn">⭐ 167</button>
+      <button class="btn">Code</button>
+      <button class="btn btn-download">Download</button>
+      <button class="btn">Request Access</button>
+    </div>
+  </section>
+
+  <!-- Tabs -->
+  <section class="tabs">
+    <ul>
+      <li class="active" data-tab="data-card">Data Card</li>
+      <li data-tab="code">Code</li>
+      <li data-tab="discussion">Discussion</li>
+      <li data-tab="suggestions">Suggestions</li>
+    </ul>
+  </section>
+
+  <!-- Tab Contents -->
+  <section class="tab-content" id="data-card">
+    <h2>About Dataset</h2>
+    <p>This dataset contains anonymized patient metrics from multiple institutions,
+       filtered to protect privacy. Ideal for machine learning experiments.</p>
+
+    <h3>License</h3>
+    <p>Creative Commons Attribution 4.0</p>
+
+    <h3>Sample Preview</h3>
+    <table class="preview-table">
+      <thead>
+        <tr><th>PatientID</th><th>Age</th><th>Diagnosis</th><th>Outcome</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>XXXX1</td><td>45</td><td>Diabetes</td><td>Improved</td></tr>
+        <tr><td>XXXX2</td><td>61</td><td>Heart Disease</td><td>Stable</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="tab-content hidden" id="code">
+    <p>Code snippets, notebooks, or example analyses will appear here.</p>
+  </section>
+
+  <section class="tab-content hidden" id="discussion">
+    <p>Threaded comments / Q&A go here.</p>
+  </section>
+
+  <section class="tab-content hidden" id="suggestions">
+    <p>Suggested improvements or related datasets.</p>
+  </section>
+</main>
+
+<script>
+/* ==== Tab Switching Logic ==== */
+document.querySelectorAll('.tabs li').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tabs li').forEach(li => li.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.remove('hidden');
+  });
+});
+</script>
+
+</body>
+</html>
